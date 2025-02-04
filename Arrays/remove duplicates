@@ -1,16 +1,40 @@
+Brute force 
+
+Time complexity->  o(nlog(n))+o(n)
+Space complexity-> o(n)
 class Solution {
     public int removeDuplicates(int[] nums) {
         int n=nums.length;
-        int[] arr=new int[];
-        for(int i=o;i<n;i++){
-            for(int j=1;j<n;j++){
-                if(nums[i]!=nums[j]){
-                    arr[]
-                }
-
-            }
-
+        LinkedHashSet<Integer> dup=new LinkedHashSet<Integer>(); //linkedhashset maintains order where hashset doesn't!!
+        int temp;
+        for(int i=0;i<n;i++){
+            dup.add(nums[i]);  //time taken for inserting elements in hashset o(nlog(n))
+                                //space taken in worst case if all elements are unique...o(n)
         }
-        
-    }
+        int index=0;
+        for(Integer element : dup){  // for re arranging elements within array...o(n)
+            nums[index]=element;
+            index=index+1;
+        }
+    return index;
+}
+}
+
+Optimised sol
+
+Time complexity <o(n)>  only one pass
+Space complexity <o(1)> no extra space is used, done with in the array
+
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int n=nums.length;
+        int i=0;
+        for(int j=1;j<n;j++){              //time ->one pass o(n)
+            if(nums[j]!=nums[i]){          //space ->o(1)
+                nums[i+1]=nums[j];
+                i+=1;
+            }
+        }
+        return i+1;
+}
 }
