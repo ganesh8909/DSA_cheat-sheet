@@ -1,0 +1,52 @@
+Brute force:  
+Time comp->O(2N)
+Space comp->O(X)
+              
+class Solution {
+    public void moveZeroes(int[] nums) {
+        ArrayList<Integer> list=new ArrayList<Integer>();  // O(x)  // O(N)->worst case(all are non zero elements)
+        int n=nums.length;
+        for(int i=0;i<n;i++){        T//O(N)
+            if(nums[i]!=0){
+                list.add(nums[i]);
+            }
+        }
+        for(int i=0;i<list.size();i++){  //O(X) where X is no of non zero elements
+            nums[i]=list.get(i);
+        }
+        for(int i=list.size();i<n;i++){   //O(N-X) where N-X is no of zeros
+            nums[i]=0;
+        }
+
+
+optimized solution:
+Time comp->O(N)
+space comp->O(1)
+
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int j=-1;
+        for(int i=0;i<nums.length;i++){      //O(X)...after x iterations we found zero.
+            if (nums[i]==0){
+                j=i;
+                break;
+            }
+        }
+        if(j==-1){
+            return ;
+        }
+        else{
+            for(int i=j+1;i<nums.length;i++){       //O(N-X)...iterated through N-X no of elements.
+                int temp=0;
+                if(nums[i]!=0){
+                    temp=nums[i];
+                    nums[i]=nums[j];
+                    nums[j]=temp;
+                    j++;
+                }
+            }
+        }
+    }
+}
+    }
+}
