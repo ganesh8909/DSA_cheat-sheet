@@ -2,10 +2,10 @@
 class Solution {
     public static ArrayList<Integer> findUnion(int a[], int b[]) {
         Set<Integer> list = new TreeSet<Integer>();
-        for(int i=0;i<a.length;i++){       //O(N)
+        for(int i=0;i<a.length;i++){       //O(NlogN)
             list.add(a[i]);
         }
-        for(int i=0;i<b.length;i++){       //O(M)
+        for(int i=0;i<b.length;i++){       //O(MlogM)
             list.add(b[i]);
         }
         ArrayList<Integer> list2=new ArrayList<Integer>(list);      //O(K) this k will be atmost (N+M) elements
@@ -14,20 +14,20 @@ class Solution {
 }
 
 Time Complexity
-1. Iterating over array a takes O(n) time, where n is the length of array a.
-2. Iterating over array b takes O(m) time, where m is the length of array b.
+1. Iterating over array a takes O(nlogn) time, where n is the length of array a.
+2. Iterating over array b takes O(mlogm) time, where m is the length of array b.
 3. Adding elements to the LinkedHashSet takes O(1) average time, since it uses a hash table internally.
 4. Converting the LinkedHashSet to an ArrayList takes O(k) time, where k is the number of unique elements in the set.
 
 Since the iterations over arrays a and b are done sequentially, the total time complexity is:
-O(n) + O(m) + O(k) = O(n + m + k)
+O(nlogn) + O(mlogm) + O(k) = O(nlogn + mlogm + (n+m))
 
 However, since k is the number of unique elements, which is at most n + m, we can simplify the time complexity to:
 O(n + m)
 
 Space Complexity
-1. The LinkedHashSet uses O(k) space to store the unique elements, where k is the number of unique elements.
-2. The ArrayList uses O(k) space to store the result.
+1. The LinkedHashSet uses O(k) space to store the unique elements, where k is the number of unique elements.atmost (N+M) unique elements
+2. The ArrayList uses O(n+m) space to store the result.
 
 Since the maximum space used is O(k), and k is at most n + m, the space complexity is:
 O(n + m)
