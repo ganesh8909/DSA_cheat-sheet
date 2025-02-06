@@ -1,4 +1,5 @@
-
+Time comp->O(nlogn + mlogm + (n+m))
+space comp->O(n + m)
 class Solution {
     public static ArrayList<Integer> findUnion(int a[], int b[]) {
         Set<Integer> list = new TreeSet<Integer>();
