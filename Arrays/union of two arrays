@@ -1,3 +1,5 @@
+using TreeSet->arraylist(lil comp)
+
 Time comp->O(nlogn + mlogm + (n+m))
 space comp->O(n + m)
 class Solution {
@@ -32,4 +34,46 @@ Space Complexity
 
 Since the maximum space used is O(k), and k is at most n + m, the space complexity is:
 O(n + m)
+
+TWO POINTER APPROACH
+Time comp->O(n+m)
+Space comp->O(n+m)...This is not extra space taken,this is the space taken in order to return the elements..
+
+class Solution {
+    public static ArrayList<Integer> findUnion(int a[], int b[]) {
+        ArrayList<Integer> array=new ArrayList<Integer>();
+        int n=a.length;
+        int m=b.length;
+        int i=0;
+        int j=0;
+        while(i<n && j<m){
+            if(a[i]<=b[j]){
+                if(array.size()==0 || !array.contains(a[i])){
+                    array.add(a[i]);
+                }
+                i++;
+            }
+            else{
+                if(array.size()==0 || !array.contains(b[j])){
+                    array.add(b[j]);
+                }
+                j++;
+            }
+        }
+        while(j<m){
+            if(array.size()==0 || !array.contains(b[j])){
+                array.add(b[j]);
+            }
+            j++;
+        }
+        while(i<n){
+            if(array.size()==0 || !array.contains(a[i])){
+                array.add(a[i]);
+            }
+            i++;
+        }
+        return array;        
+    }            
+}
+
 
