@@ -1,0 +1,80 @@
+Brute force
+Time comp->O(n^2)
+space comp->O(1)
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        int n=nums.length;
+        int flag;
+        for(int i=0;i<n+1;i++){
+            flag=0;
+            for(int j=0;j<n;j++){
+                if(nums[j]==i){
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0){
+                return i;
+            }
+        }
+        return 0;   
+    }
+}
+
+Better solution
+time comp->O(n+1) + O(n+1) ~ O(2*(n+1))
+space comp->O(n+1)
+class Solution {
+    public int missingNumber(int[] nums) {
+        int n=nums.length;
+        int hash[]=new int[n+1];  //hash array space comp->O(n+1)
+        for(int i=0;i<n;i++){     // storing the frequencies->O(n+1)
+            hash[nums[i]]++;
+        }
+        for(int i=0;i<=n;i++){    //checking the freqencies for numbers 1 to N->O(n+1)
+            if (hash[i]==0){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+
+optimized solution
+using sum
+Time comp->O(n)
+Space comp->O(1)
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        int n=nums.length;
+        int sum=n*(n+1)/2;
+        int sum2=0;
+        for(int i=0;i<n;i++){
+            sum2+=nums[i];
+        }
+        return sum-sum2;
+    }
+}
+
+using XOR
+
+Time comp->O(2n)
+Space comp->O(1)
+class Solution {
+    public int missingNumber(int[] nums) {
+        int n=nums.length;
+        int XOR1=0;
+        int XOR2=0;
+        for(int i=1;i<=n;i++){
+            XOR1=XOR1^i;
+        }
+        for(int i=0;i<n;i++){
+            XOR2=XOR2^nums[i];
+        }
+        return XOR1^XOR2;
+        
+    }
+}
