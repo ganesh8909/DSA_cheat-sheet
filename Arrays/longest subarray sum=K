@@ -1,4 +1,4 @@
-Using Hashing
+Using Hash map
 Time complexity->O(Nlog(N))
 space complexity->O(N)
 class Solution{
