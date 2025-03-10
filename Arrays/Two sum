@@ -1,0 +1,41 @@
+Brute force 
+Time comp->O(N**2)
+Space comp->O(1)
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] res=new int[2];
+        for(int i=0;i<nums.length;i++){
+            for(int j=i+1;j<nums.length;j++){
+                if(nums[i]+nums[j]==target){
+                    res[0]=i;
+                    res[1]=j;
+                }
+            }
+        }
+        return res;    
+    }
+}
+
+
+Optimal solution
+Time comp->O(Nlog(N))...map
+            O(N))...best n avg case unordered
+             O(N**2)..worst case in unordered
+Space comp->O(N)...putting elements into the hashmap
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] temp=new int[2];
+        HashMap<Integer,Integer> map=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            int rem=target-nums[i];
+            if (map.containsKey(rem)){
+                temp[0]=map.get(rem);
+                temp[1]=i;
+                return temp;
+            }
+            map.put(nums[i],i);
+        }
+        return temp;    
+    }
+}
