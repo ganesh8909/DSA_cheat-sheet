@@ -47,3 +47,38 @@ class Solution {
     }
 }
 
+optimal solution
+
+Time comp->O(N)
+Space comp->O(1)
+
+step-1->Moors voting algorithm
+step-2->verify if element is >n/2
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n = nums.length;
+        int count=0;                        //to know the majority element
+        int element=0;
+        for(int i=0;i<nums.length;i++){
+            if(count==0){
+                count=1;                    
+                element=nums[i];
+            }
+            else if(nums[i]==element){
+                count++;
+            }
+            else count--;
+        }
+        int c=0;
+        for(int i=0;i<n;i++){              //used to check the element count
+            if(nums[i]==element){
+                c++;
+            }
+        }
+        if(c>n/2){
+            return element;
+        }
+        return -1;    
+    }
+}
