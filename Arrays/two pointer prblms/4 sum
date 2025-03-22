@@ -23,3 +23,83 @@ class Solution {
         return list;   
     }
 }
+
+Better approach
+
+Time comp->O(N3*log(M)), where N = size of the array, M = no. of elements in the set.
+Reason: Here, we are mainly using 3 nested loops, and inside the loops there are some operations on the set data structure which take log(M) time complexity.
+Space comp-> O(2 * no. of the quadruplets)+O(N)
+Reason: we are using a set data structure and a list to store the quads. This results in the first term. And the second space is taken by the set data structure we are using to store the array elements. At most, the set can contain approximately all the array elements and so the space complexity is O(N)
+
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Set<List<Integer>> set=new HashSet<>();
+        int n=nums.length;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                HashSet<Long> set1=new HashSet<>();
+                for(int k=j+1;k<n;k++){
+                    long sum = nums[i] + nums[j];
+                    sum+=nums[k];
+                    long fourth=target-sum;
+                    if(set1.contains(fourth)){
+                        List<Integer> temp = new ArrayList<>();
+                        temp.add(nums[i]);
+                        temp.add(nums[j]);
+                        temp.add(nums[k]);
+                        temp.add((int) fourth);
+                        temp.sort(null);
+                        set.add(temp);
+                    }
+                    set1.add((long)nums[k]);
+                }
+            }
+        }
+        List<List<Integer>> list=new ArrayList<>(set);
+        return list;   
+    }
+}
+
+
+
+Optimal solution
+
+Time comp->O(N**3), where N = size of the array.
+Reason: Each of the pointers i and j, is running for approximately N times. And both the pointers k and l combined can run for approximately N times including the operation of skipping duplicates. So the total time complexity will be O(N3).
+Space comp->O(no. of quadruplets)
+Reason: This space is only used to store the answer. We are not using any extra space to solve this problem. So, from that perspective, space complexity can be written as O(1).
+
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> list2=new ArrayList<>();
+        Arrays.sort(nums);
+        int n=nums.length;
+        for(int i=0;i<n;i++){
+            if(i>0 && nums[i]==nums[i-1]) continue;
+            for(int j=i+1;j<n;j++){
+                if(j>i+1 && nums[j]==nums[j-1]) continue;
+                int k=j+1;
+                int l=n-1;
+                while(k<l){
+                    long sum=nums[i];
+                    sum+=nums[j];
+                    sum+=nums[k];
+                    sum+=nums[l];
+                    if(sum>target) l--;
+                    else if(sum<target) k++;
+                    else{
+                        List<Integer> list1=Arrays.asList(nums[i],nums[j],nums[k],nums[l]);
+                        list2.add(list1);
+                        
+                        k++;
+                        l--;
+                        while(k<l && nums[k]==nums[k-1]) k++;
+                        while(k<l && nums[l]==nums[l+1]) l--;
+                    }
+                }
+            }
+        }
+        
+        return list2;   
+    }
+}
