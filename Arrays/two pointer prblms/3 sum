@@ -1,0 +1,82 @@
+Brute force 
+
+Time comp->O(N**3)
+Space comp->O(2 * no. of the unique triplets) as we are using a set data structure and a list to store the triplets.
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> hash=new HashSet<>(); //To remove duplicate inner lists=>example [[-1,0,1],[-1,-1,2],[-1,0,1]]
+        for(int i=0;i<nums.length;i++){
+            for(int j=i+1;j<nums.length;j++){
+                for(int k=j+1;k<nums.length;k++){
+                    if(nums[i]+nums[j]+nums[k]==0 && (i!= j && i!= k && j!= k)){
+                        List<Integer> temp=Arrays.asList(nums[i],nums[j],nums[k]);
+                        temp.sort(null); //we can also use this *Collections.sort(temp)*;
+                        hash.add(temp);
+                    }     
+                }
+            }
+        }
+        List<List<Integer>> list=new ArrayList<>(hash);
+        return list;    
+    }
+}
+
+Better solution
+Time comp->O(N**2)
+Space comp->O(2 * no. of the unique triplets) + O(N) as we are using a set data structure and a list to store the triplets and extra O(N) for storing the array elements in another set.
+
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> set=new HashSet<>();
+        for(int i=0;i<nums.length;i++){
+            HashSet<Integer> map=new HashSet<>();
+            for(int j=i+1;j<nums.length;j++){
+                int third=-(nums[i]+nums[j]);
+                if(map.contains(third)){
+                    List<Integer> temp=Arrays.asList(nums[i],nums[j],third);
+                    temp.sort(null);
+                    set.add(temp);
+                }
+                map.add(nums[j]);
+            }
+        }
+        List<List<Integer>> list=new ArrayList<>(set);
+        return list;
+
+    }
+}
+
+
+Optimal Solution
+
+Time comp->O(N**2) +O(NlogN)for sorting
+ The pointer i, is running for approximately N times. And both the pointers j and k combined can run for approximately N times including the operation of skipping duplicates. So the total time complexity will be O(N2). 
+Space comp->O(1)
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> list=new ArrayList<>();
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length;i++){
+            if(i>0 && nums[i]==nums[i-1]) continue;
+            int j=i+1;
+            int k=nums.length-1;
+            while(j<k){
+                int sum=nums[i]+nums[j]+nums[k];
+                if(sum>0) k--;
+                else if(sum<0) j++;
+                else{
+                    List<Integer> temp=Arrays.asList(nums[i],nums[j],nums[k]);
+                    list.add(temp);
+                    j++;
+                    k--;
+                    while((j<k) && nums[j]==nums[j-1]) j++; //removing duplicates
+                    while((j<k) && nums[k]==nums[k+1]) j--; //removing duplicates
+                }
+            }
+        }
+        return list;
+    }
+}
