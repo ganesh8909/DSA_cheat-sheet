@@ -1,0 +1,25 @@
+Brute force
+Time comp->O(N**4)
+space comp->O(2 * no. of the quadruplets) as we are using a set data structure and a list to store the quads.
+
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Set<List<Integer>> set=new HashSet<>();
+        int n=nums.length;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                for(int k=j+1;k<n;k++){
+                    for(int l=k+1;l<n;l++){
+                        if(nums[i]+nums[j]+nums[k]+nums[l]==target){
+                            List<Integer> temp=Arrays.asList(nums[i],nums[j],nums[k],nums[l]);
+                            temp.sort(null);
+                            set.add(temp);
+                        }
+                    }
+                }
+            }
+        }
+        List<List<Integer>> list=new ArrayList<>(set);
+        return list;   
+    }
+}
